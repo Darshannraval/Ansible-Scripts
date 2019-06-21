@@ -1,0 +1,19 @@
+---
+  - name: Launch ec2 instance
+    hosts: localhost
+    vars_files:
+        - /home/ubuntu/awscreds.yml     
+    tasks:
+      - name: Launching ec2 instance      
+        ec2:
+          key_name: ohiokey
+          region: us-east-2
+          instance_type: t2.micro
+          image: ami-0c55b159cbfafe1f0
+          group_id: sg-0d19cac779f032cd0
+          count: 1
+          vpc_subnet_id: subnet-2e3cf662
+          assign_public_ip: yes
+          aws_access_key: "{{ aws_access_key }}" 
+          aws_secret_key: "{{ aws_secret_key }}"
+
