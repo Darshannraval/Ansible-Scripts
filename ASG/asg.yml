@@ -1,0 +1,32 @@
+---
+  - name: Autoscaling
+    hosts: localhost
+    vars_files:
+        - /home/ubuntu/awscred.yml     
+    tasks:
+      - name: create launch configuration      
+        ec2_lc:
+          name: test_lc      
+          key_name: ohiokey
+          region: us-east-2
+          instance_type: t2.micro
+          security_groups: MySG
+          image_id: ami-0c55b159cbfafe1f0
+          assign_public_ip: yes
+          aws_access_key: "{{ aws_access_key }}"
+          aws_secret_key: "{{ aws_secret_key }}"
+
+      - name: create an autoscaling group 
+        ec2_asg:
+           name: myasg
+           launch_config_name: test_lc
+           health_check_period: 60
+           health_check_type: EC2
+           min_size: 1
+           max_size: 2
+           desired_capacity: 1
+           region: us-east-2
+           availability_zones: [ 'us-east-2a', 'us-east-2b' ]
+           aws_access_key: "{{ aws_access_key }}"
+           aws_secret_key: "{{ aws_secret_key }}"
+    
