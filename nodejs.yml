@@ -1,0 +1,12 @@
+---
+  - name: nodejs installation
+    hosts: localhost
+    become: yes
+    become_method: sudo 
+    tasks:
+       -  name: nodejs installation    
+          apt:
+            name: nodejs 
+            name: npm
+            state: latest
+           
