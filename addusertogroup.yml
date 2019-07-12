@@ -1,0 +1,15 @@
+---
+
+- name: Add user to specific group
+  hosts: localhost
+  become: true
+  become_method: sudo
+
+  tasks:
+          - name: Add user Darsh to Devops group
+            user:
+                name: "{{ item }}"      
+                group: Devops
+            with_items: 
+                 - Kashish
+                 - Mohit     
